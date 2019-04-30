@@ -1,0 +1,107 @@
+'use strict';
+
+var Transport = require('azure-iot-device-mqtt').Mqtt;
+var Client = require('azure-iot-device').ModuleClient;
+const { exec } = require('child_process');
+
+// Blob storage
+const azureStorage = require('azure-storage');
+const path = require('path');
+ 
+const azureStorageConfig = {
+    accountName: "",
+    accountKey: "",
+    containerName: ""
+};
+
+// Initiate the module client
+Client.fromEnvironment(Transport, function (err, client) {
+  if (err) {
+    throw err;
+  } else {
+    client.on('error', function (err) {
+      throw err;
+    });
+
+    // connect to the Edge instance
+    client.open(function (err) {
+      if (err) {
+        throw err;
+      } else {
+        console.log('IoT Hub module client initialized');
+
+        // Act on twin change of the module.
+        client.getTwin(function (err, twin) {
+          if (err) {
+              console.error('Error getting twin: ' + err.message);
+          } else {
+            twin.on('properties.desired', function(data) {
+              console.log("Module Twin: %s", JSON.stringify(data));
+              // get the twin information
+              var flowversion = data.flowversion; 
+              var certificatefile = data.certificatefile;
+              azureStorageConfig.accountName = data.accountname;
+              azureStorageConfig.accountKey = data.accountkey;
+              azureStorageConfig.containerName = data.containername;
+              // Act on twin change
+              // Laoding certificate file
+              console.log("Loading certificate file.");
+              downloadBlob(certificatefile, '/config/');
+              exec('keytool -import -noprompt -alias vm-clean -file /config/' + certificatefile + ' -keystore /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts -storepass changeit', (err, stdout, stderr) => {
+                if (err) {
+                  // node couldn't execute the command
+                  console.error('Error loading certificate: ' + err.message);
+                  return;
+                }
+                else {
+                    // the *entire* stdout and stderr (buffered)
+                  console.log(`stdout: ${stdout}`);
+                  console.log(`stderr: ${stderr}`);
+                }
+              });
+              // Load flow file from /config directory (can also be done from blob storage online)
+              console.log("Loading Nifi flow file.");
+              downloadBlob(flowversion + '.flow.xml.gz', '/config/');
+              exec('cp /config/' + flowversion + '.flow.xml.gz /nifi-1.9.2/conf/flow.xml.gz', (err, stdout, stderr) => {
+                if (err) {
+                  // node couldn't execute the command
+                  console.error('Error loading flow: ' + err.message);
+                  return;
+                }
+                else {
+                    // the *entire* stdout and stderr (buffered)
+                  console.log(`stdout: ${stdout}`);
+                  console.log(`stderr: ${stderr}`);
+                  // (re)start NiFi
+                  console.log("(Re)Starting NiFi.");
+                  exec('/nifi-1.9.2/bin/nifi.sh restart', (err, stdout, stderr) => {
+                    if (err) {
+                      // node couldn't execute the command
+                      console.error('Error loading certificate: ' + err.message);
+                      return;
+                    }
+                  
+                    // the *entire* stdout and stderr (buffered)
+                    console.log(`stdout: ${stdout}`);
+                    console.log(`stderr: ${stderr}`);
+                  });
+                }
+              });
+            });
+          }
+      });
+      }
+    });
+  }
+});
+
+function downloadBlob (blobName, downloadFilePath) {
+  const name = path.basename(blobName);
+  console.log("File to download: %s", name);
+  const blobService = azureStorage.createBlobService(azureStorageConfig.accountName, azureStorageConfig.accountKey); 
+  blobService.getBlobToLocalFile(azureStorageConfig.containerName, blobName, `${downloadFilePath}${name}`, function(error, serverBlob) {
+      if (error) {
+          console.log(error);
+      }
+  });
+};
