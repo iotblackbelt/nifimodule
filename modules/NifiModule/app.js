@@ -46,62 +46,71 @@ Client.fromEnvironment(Transport, function (err, client) {
               // Act on twin change
               // Laoding certificate file
               console.log("Loading certificate file.");
-              downloadBlob(certificatefile, '/config/');
-              exec('keytool -import -noprompt -alias vm-clean -file /config/' + certificatefile + ' -keystore /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts -storepass changeit', (err, stdout, stderr) => {
+              if (certificatefile) {
+                downloadBlob(certificatefile, '/config/');
+                exec('keytool -import -noprompt -alias iot-edge -file /config/' + certificatefile + ' -keystore /usr/lib/jvm/java-8-openjdk-amd64/jre/lib/security/cacerts -storepass changeit', (err, stdout, stderr) => {
+                  if (err) {
+                    // node couldn't execute the command
+                    console.error('Error loading certificate: ' + err.message);
+                    return;
+                  }
+                  else {
+                      // the *entire* stdout and stderr (buffered)
+                    console.log(`stdout: ${stdout}`);
+                    console.log(`stderr: ${stderr}`);
+                  }
+                });
+              }
+              // Load flow file from /config directory (can also be done from blob storage online)
+              if (flowversion)
+              {
+                console.log("Loading Nifi flow file.");
+                downloadBlob(flowversion + '.flow.xml.gz', '/config/');
+                exec('cp /config/' + flowversion + '.flow.xml.gz /nifi-1.9.2/conf/flow.xml.gz', (err, stdout, stderr) => {
+                  if (err) {
+                    // node couldn't execute the command
+                    console.error('Error loading flow: ' + err.message);
+                    return;
+                  }
+                  else {
+                      // the *entire* stdout and stderr (buffered)
+                    console.log(`stdout: ${stdout}`);
+                    console.log(`stderr: ${stderr}`);
+                  }
+                });
+              }
+              // (re)start NiFi
+              console.log("(Re)Starting NiFi.");
+              exec('/nifi-1.9.2/bin/nifi.sh restart', (err, stdout, stderr) => {
                 if (err) {
                   // node couldn't execute the command
                   console.error('Error loading certificate: ' + err.message);
                   return;
                 }
-                else {
-                    // the *entire* stdout and stderr (buffered)
-                  console.log(`stdout: ${stdout}`);
-                  console.log(`stderr: ${stderr}`);
-                }
-              });
-              // Load flow file from /config directory (can also be done from blob storage online)
-              console.log("Loading Nifi flow file.");
-              downloadBlob(flowversion + '.flow.xml.gz', '/config/');
-              exec('cp /config/' + flowversion + '.flow.xml.gz /nifi-1.9.2/conf/flow.xml.gz', (err, stdout, stderr) => {
-                if (err) {
-                  // node couldn't execute the command
-                  console.error('Error loading flow: ' + err.message);
-                  return;
-                }
-                else {
-                    // the *entire* stdout and stderr (buffered)
-                  console.log(`stdout: ${stdout}`);
-                  console.log(`stderr: ${stderr}`);
-                  // (re)start NiFi
-                  console.log("(Re)Starting NiFi.");
-                  exec('/nifi-1.9.2/bin/nifi.sh restart', (err, stdout, stderr) => {
-                    if (err) {
-                      // node couldn't execute the command
-                      console.error('Error loading certificate: ' + err.message);
-                      return;
-                    }
-                  
-                    // the *entire* stdout and stderr (buffered)
-                    console.log(`stdout: ${stdout}`);
-                    console.log(`stderr: ${stderr}`);
-                  });
-                }
+              
+                // the *entire* stdout and stderr (buffered)
+                console.log(`stdout: ${stdout}`);
+                console.log(`stderr: ${stderr}`);
               });
             });
           }
-      });
+        });
       }
     });
   }
 });
 
 function downloadBlob (blobName, downloadFilePath) {
-  const name = path.basename(blobName);
-  console.log("File to download: %s", name);
-  const blobService = azureStorage.createBlobService(azureStorageConfig.accountName, azureStorageConfig.accountKey); 
-  blobService.getBlobToLocalFile(azureStorageConfig.containerName, blobName, `${downloadFilePath}${name}`, function(error, serverBlob) {
-      if (error) {
-          console.log(error);
-      }
-  });
+  // only download if storage information is set
+  if (azureStorageConfig.accountName && azureStorageConfig.accountKey && azureStorageConfig.containerName)
+  {
+    const name = path.basename(blobName);
+    console.log("File to download: %s", name);
+    const blobService = azureStorage.createBlobService(azureStorageConfig.accountName, azureStorageConfig.accountKey); 
+    blobService.getBlobToLocalFile(azureStorageConfig.containerName, blobName, `${downloadFilePath}${name}`, function(error, serverBlob) {
+        if (error) {
+            console.log(error);
+        }
+    });
+  }
 };
