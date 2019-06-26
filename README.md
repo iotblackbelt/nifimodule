@@ -62,7 +62,7 @@ Go through the steps to finish the "Set Modules" process.
 
 ## Access Apache Nifi to set up the IoT Edge communication
 Once the Apache Nifi module is running you can access the Apache Nifi using a browser. Browse to http://&lt;Your IoT Edge IP Address&gt;:8080/nifi and you will see the Nifi flow page.
-In your case this flow will be empty. The communication between Nifi and IoT Edge uses the native MQTT protocol, to understand more on native MQTT support for Azure IoT please go [here](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support).
+In your case this flow will be empty. The communication between Nifi and IoT Edge uses the native MQTT protocol, to understand more on native MQTT support for Azure IoT please go [here](https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support). The assumption is that you know how to work with Apache Nifi and the flow designer. If you don't please visit the [Apache Nifi site](https://nifi.apache.org/) to learn more.
 
 ![Nifi flow](images/Apache_nifi_flow.png "Nifi flow")
 
