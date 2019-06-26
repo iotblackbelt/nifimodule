@@ -1,7 +1,7 @@
-# Apache Nifi Azure Iot Edge Module
+# Apache Nifi Azure IoT Edge Module
 The Apache Nifi Azure Iot Edge Module is a module that can be used to run Apache Nifi on IoT Edge and use it a an ingestion module. The module is a Node.js wrapper that enables the module twin communication and starts Apache Nifi in the container. Apache Nifi can then use native MQTT connectivity (PublishMQTT processor) to communicate with the IoT Edge Hub. The code to create this module is featured in this repository, but you can also use the ready built module on Docker Hub. The documentation below will describe the steps to take to setup and deploy the ready built module to your Azure IoT Edge device.
 
-# Steps to deploy the Apache Nifi Azure Iot Edge Module
+# Steps to deploy the Apache Nifi Azure IoT Edge Module
 Deploying the module will require the follwing steps:
 1. Deploy a Linux X64 Iot Edge.
 2. Configure an IoT Edge device to act as a transparent gateway
