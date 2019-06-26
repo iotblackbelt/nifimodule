@@ -24,5 +24,7 @@ EXPOSE 8080/tcp
 
 COPY app.js ./
 
+WORKDIR /config
+
 # set the node js wrapper as the startup application.
 CMD ["node", "app.js"]
