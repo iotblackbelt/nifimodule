@@ -56,7 +56,7 @@ And use the following module twin desired properties:
   }
 }
 ```
-These desired properties will be used to configure you Apache Nifi module. Please see the code in app.js to learn more on how these settings are used.
+These desired properties will be used to configure your Apache Nifi module. Please see the code in app.js to learn more on how these settings are used.
 
 Go through the steps to finish the "Set Modules" process.
 
