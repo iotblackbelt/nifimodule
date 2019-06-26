@@ -84,7 +84,7 @@ Client.fromEnvironment(Transport, function (err, client) {
               exec('/nifi-1.9.2/bin/nifi.sh restart', (err, stdout, stderr) => {
                 if (err) {
                   // node couldn't execute the command
-                  console.error('Error loading certificate: ' + err.message);
+                  console.error('Error starting Apache Nifi: ' + err.message);
                   return;
                 }
               
