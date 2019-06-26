@@ -9,7 +9,7 @@ Deploying the module will require the follwing steps:
 4. Add the module to your IoT Edge
 5. Access Apache Nifi to set up the IoT Edge communication
 
-## Deploy a Linux 64 Iot Edge
+## Deploy a Linux 64 IoT Edge
 The Azure IoT Edge runtime is what turns a device into an IoT Edge device. The runtime can be deployed on devices as small as a Raspberry Pi or as large as an industrial server. Once a device is configured with the IoT Edge runtime, you can start deploying business logic to it from the cloud. The Apache Nifi module only come in the flavor AMD64 and therefor you need to setup a Linux based IoT Edge device. How to set up such a device can be found [here](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-install-iot-edge-linux).
 At the end of the setup create a directory "/config" on the IoT Edge and change ownership to 777 (```sudo chown 777 /config```).
 
