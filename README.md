@@ -42,7 +42,7 @@ Use the following container create options:
   }
 }
 ```
-This will allow you to access Apache Nifi on port 8080 on the IoT Edge device through a browser and the downloaded certificate and floe file will be stored on the IoT Edge disk.
+This will allow you to access Apache Nifi on port 8080 on the IoT Edge device through a browser and the downloaded certificate and flow file will be stored on the IoT Edge disk.
 
 And use the following module twin desired properties:
 ```json
