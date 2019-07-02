@@ -24,7 +24,7 @@ Go to the Azure potal and open up the IoT Edge device you created in the first s
 
 ![Set module](images/Set_module.png "Set module")
 
-Give your module a name (f.i. NifiModule) and use "gbbiotwesouth/nifimodule:0.1.0-amd64" as the Image URI.
+Give your module a name (f.i. NifiModule) and use "gbbiotwesouth/nifimodule:0.1.1-amd64" as the Image URI.
 Use the following container create options:
 ```json
 {
