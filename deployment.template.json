@@ -61,7 +61,7 @@
               "createOptions": {
                 "HostConfig": {
                   "Binds": [
-                    "/nificonfig:/config"
+                    "/config:/config"
                   ],
                   "PortBindings": {
                     "8080/tcp": [
