@@ -91,7 +91,7 @@
     "NifiModule": {
       "properties.desired": {
         "schemaVersion": "1.0",
-        "certificatefile": "azure-iot-test-only.root.ca.cert.pem",
+        "certificatefile": "",
         "flowversion": "",
         "accountname": "",
         "accountkey": "",
