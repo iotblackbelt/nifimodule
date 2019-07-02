@@ -97,12 +97,6 @@
         "accountkey": "",
         "containername": ""
       }
-    },
-    "SimulatedTemperatureSensor": {
-      "properties.desired": {
-        "SendData": true,
-        "SendInterval": 5
-      }
     }
   }
 }

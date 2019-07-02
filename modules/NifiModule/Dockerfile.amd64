@@ -10,8 +10,6 @@ RUN wget http://apache.redkiwi.nl/nifi/1.9.2/nifi-1.9.2-bin.tar.gz
 RUN tar zxvf nifi-1.9.2-bin.tar.gz
 RUN rm nifi-1.9.2-bin.tar.gz
 
-WORKDIR /config
-
 WORKDIR /module
 
 # Copy the node js files (wrapper) and install
@@ -19,6 +17,7 @@ COPY package*.json ./
 
 RUN apt-get update
 RUN apt-get install nodejs npm -y --fix-missing
+RUN npm install npm -g
 RUN npm install --production
 
 # expose the Apache Nifi port to give access through a browser.
