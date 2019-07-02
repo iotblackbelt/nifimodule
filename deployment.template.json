@@ -93,9 +93,9 @@
         "schemaVersion": "1.0",
         "certificatefile": "azure-iot-test-only.root.ca.cert.pem",
         "flowversion": "",
-        "accountname": "gbbnifistorage",
-        "accountkey": "8OrTvR9aB6kSXcTZfRCpn50Q3lymowZrBaJmRPKCNpfKdH/216uEhfIXNcrHtnngfLuq/iYF5HW15mj10SJqkQ==",
-        "containername": "nifi"
+        "accountname": "",
+        "accountkey": "",
+        "containername": ""
       }
     },
     "SimulatedTemperatureSensor": {

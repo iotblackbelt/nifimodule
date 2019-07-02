@@ -27,4 +27,4 @@ COPY app.js ./
 WORKDIR /config
 
 # set the node js wrapper as the startup application.
-CMD ["node", "app.js"]
+CMD ["node", "/module/app.js"]
