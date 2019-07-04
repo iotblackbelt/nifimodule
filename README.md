@@ -58,6 +58,8 @@ And use the following module twin desired properties:
 ```
 These desired properties will be used to configure your Apache Nifi module. Please see the code in app.js to learn more on how these settings are used.
 
+> If you don't want to use Azure Storage to provision the files, you can copy the certificate and flow file to the IoT Edge device "/config" directory and leave "accountname", "accountkey" and "containername" empty in the desired properties. 
+
 Go through the steps to finish the "Set Modules" process.
 
 ## Access Apache Nifi to set up the IoT Edge communication
