@@ -73,12 +73,14 @@ To enable the communication with IoT Edge, you have to add a PublishMQTT process
 
 Use the following settings:
 - Broker URI: ssl://&lt;nameof your edge device&gt;:8883
-- Client ID: &lt;name of your edge device&gt;
-- Username: &lt;your IoT Hub&gt;.azure-devices.net/&lt;name of your edge device&gt;/?api-version=2018-06-30
-- Password: &lt;your Iot Edge SAS token&gt; <br/>See: https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support#using-the-mqtt-protocol-directly-as-a-device. You can use the cross-platform Azure IoT Tools for Visual Studio Code or the Device Explorer tool to quickly generate a SAS token that you can copy and paste.
-- Topic: devices/&lt;name of your edge device&gt;/messages/events/
+- Client ID: &lt;name of your (edge) device&gt;
+- Username: &lt;your IoT Hub&gt;.azure-devices.net/&lt;name of your (edge) device&gt;/?api-version=2018-06-30
+- Password: &lt;your (edge) device SAS token&gt; <br/>See: https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support#using-the-mqtt-protocol-directly-as-a-device. You can use the cross-platform Azure IoT Tools for Visual Studio Code or the Device Explorer tool to quickly generate a SAS token that you can copy and paste.
+- Topic: devices/&lt;name of your (edge) device&gt;/messages/events/
 - QoS: 1
 - Retain Message: false
+
+> The device above can either be an Azure IoT Device or can be the Azure IoT Edge device you are using. This depends on whether you want to use a seperate device to track the telemtry or  use the Edge routing to pre-process the data. You can route the data coming from the Nifi module using this [approach](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-create-transparent-gateway#route-messages-from-downstream-devices).
 
 Create a StandardSSLContextService and use this as the SSL Context Service for the PublishMQTT processor.
 
