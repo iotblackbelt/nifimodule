@@ -80,7 +80,7 @@ Use the following settings:
 - QoS: 1
 - Retain Message: false
 
-> The device above can either be an Azure IoT Device or can be the Azure IoT Edge device you are using. This depends on whether you want to use a seperate device to track the telemtry or  use the Edge routing to pre-process the data. You can route the data coming from the Nifi module using this [approach](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-create-transparent-gateway#route-messages-from-downstream-devices).
+> The device above can either be an Azure IoT Device or can be the Azure IoT Edge device you are using. This depends on whether you want to use a seperate device to track the telemetry or use the Edge routing to pre-process the data. You can route the data coming from the Nifi module using [this](https://docs.microsoft.com/en-us/azure/iot-edge/how-to-create-transparent-gateway#route-messages-from-downstream-devices) approach.
 
 Create a StandardSSLContextService and use this as the SSL Context Service for the PublishMQTT processor.
 
