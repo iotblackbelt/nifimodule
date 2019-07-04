@@ -74,11 +74,11 @@ To enable the communication with IoT Edge, you have to add a PublishMQTT process
 
 
 Use the following settings:
-- Broker URI: ssl://&lt;nameof your edge device&gt;:8883
-- Client ID: &lt;name of your (edge) device&gt;
-- Username: &lt;your IoT Hub&gt;.azure-devices.net/&lt;name of your (edge) device&gt;/?api-version=2018-06-30
-- Password: &lt;your (edge) device SAS token&gt; <br/>See: https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support#using-the-mqtt-protocol-directly-as-a-device. You can use the cross-platform Azure IoT Tools for Visual Studio Code or the Device Explorer tool to quickly generate a SAS token that you can copy and paste.
-- Topic: devices/&lt;name of your (edge) device&gt;/messages/events/
+- Broker URI: ssl://&lt;hostname of your edge device&gt;:8883
+- Client ID: &lt;name of your IoT (edge) device&gt;
+- Username: &lt;your IoT Hub&gt;.azure-devices.net/&lt;name of your IoT (edge) device&gt;/?api-version=2018-06-30
+- Password: &lt;your IoT (edge) device SAS token&gt; <br/>See: https://docs.microsoft.com/en-us/azure/iot-hub/iot-hub-mqtt-support#using-the-mqtt-protocol-directly-as-a-device. You can use the cross-platform Azure IoT Tools for Visual Studio Code or the Device Explorer tool to quickly generate a SAS token that you can copy and paste.
+- Topic: devices/&lt;name of your IoT (edge) device&gt;/messages/events/
 - QoS: 1
 - Retain Message: false
 
