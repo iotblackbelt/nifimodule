@@ -48,7 +48,7 @@ And use the following module twin desired properties:
 ```json
 {
   "properties.desired": {
-    "certificatefile": "azure-iot-test-only.root.ca.cert.pem",
+    "certificatefile": "<your certificate file name>",
     "flowversion": "<your flow version as create before>",
     "accountname": "<your storage account name>",
     "accountkey": "<your storage account key 1 or 2>",
