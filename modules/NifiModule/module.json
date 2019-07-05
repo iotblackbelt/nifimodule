@@ -4,7 +4,7 @@
     "image": {
         "repository": "localhost:5000/nifimodule",
         "tag": {
-            "version": "0.1.5",
+            "version": "0.2.0",
             "platforms": {
                 "amd64": "./Dockerfile.amd64"
             }

@@ -24,7 +24,7 @@ Go to the Azure potal and open up the IoT Edge device you created in the first s
 
 ![Set module](images/Set_module.png "Set module")
 
-Give your module a name (f.i. NifiModule) and use "gbbiotwesouth/nifimodule:0.1.5-amd64" as the Image URI.
+Give your module a name (f.i. NifiModule) and use "gbbiotwesouth/nifimodule:0.2.0-amd64" as the Image URI.
 Use the following container create options:
 ```json
 {
@@ -99,8 +99,14 @@ Use the following settings for the StandardSSLContextService:
 
 If everything was executed correctly, the module will have stored the provided certificate in the Java JDK keystore and will now be used to communicate with th IoT Edge Hub.
 
-If you want the flow to actually send some information, you have to create another processor that sends its data to the PublishMQTT processor. In my flow I added a GenerateFlowFile, set the interval to 5 seconds and connected it to the PublishMQTT.
-You can use the Azure IoT Hub extension in Visual Studio Code to start monitoring the messages that come from your IoT Edge device. If you've set up everything correctly you should see the message somming in a messages form an IoT Edge module.
+If you want the flow to actually send some information, you have to create another processor that sends its data to the PublishMQTT processor. In my flow I added a GenerateFlowFile, set the interval to 5 seconds and connected it to the PublishMQTT. You can use the Azure IoT Hub extension in Visual Studio Code to start monitoring the messages that come from your IoT Edge device. If you've set up everything correctly you should see the message somming in a messages form an IoT Edge module.
+
+## Backup Nifi Flow file
+The Nifi module also implements a direct method to backup the current flow file to Azure storage. The direct method "BackupFlow" requires a request object that contains the version:
+```json
+{"version":"<your version>"}
+```
+The direct method can be executed from the Azure portal. The flow file is copied locally on the IoT Edge device as well as uploaded to blob storage.
 
 ![Monitor messages](images/Monitor.png "Monitor messages")
 
